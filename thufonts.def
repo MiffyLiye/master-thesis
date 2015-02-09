@@ -10,8 +10,8 @@
 \setCJKfamilyfont{zhhei}{SimHei}
 \setCJKfamilyfont{zhkai}{KaiTi}
 \setCJKfamilyfont{zhfs}{FangSong}
-\setCJKfamilyfont{zhli}{LiSu}
-\setCJKfamilyfont{zhyou}{YouYuan}
+\setCJKfamilyfont{zhli}{Microsoft YaHei}
+\setCJKfamilyfont{zhyou}{Microsoft JhengHei}
 
 \newcommand*{\songti}{\CJKfamily{zhsong}}
 \newcommand*{\heiti}{\CJKfamily{zhhei}}
