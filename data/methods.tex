@@ -83,7 +83,7 @@ I_\text{syn}(i) = \sum_{j=1}^i K(i-j)q(j-\Delta)\dd{t}
 
 首先，通过确定 GABA 递质接收器的衰减常数 $\tau_\text{GABA}$ 来确定 $K$。
 使用 MATLAB 的 Curve Fitting Toolbox。
-拟合的目标函数为 $\text{fittype}(@(A, t_0, \tau, leaky, t) A .* exp(-(t-t_0)/\tau) .* (t > t_0) + leaky)$。
+拟合的目标函数为 $\text{fittype}(@(A, t_0, \tau, leaky, t) A .* \exp(-(t-t_0)/\tau) .* (t > t_0) + leaky)$。
 表示
 \begin{equation}
 I_\text{syn}(t) = 
@@ -128,7 +128,7 @@ q(i - \Delta) &= \Argmin_{p \geq 0} \left| \sum_{j=1}^{i-1} K(i-j)q(j-\Delta)\dd
 （A）蓝线为原始的一部分IPSC记录。红色虚线为基于 $Aq_e$ （来自B） 进行卷积后得到的结果。
 两条曲线非常接近。
 （B）根据实验数据分析出的IPSC（来自A）估计出的递质释放率 $\tilde{q} = Aq$。
-（C-D）通过比较突触前神经元的发放时间（黑色虚线）和 $Aq(t-t_\text{delay}$ 的极高点得到 $t_\text{delay}$。
+（C-D）通过比较突触前神经元的发放时间（黑色虚线）和 $Aq(t-t_\text{delay})$ 的极高点得到 $t_\text{delay}$。
 （C）突触前神经元的细胞膜电流，黑色虚线选择为神经元发放的时间。
 （D）黑色虚线与 C 中时间一致，每个红色虚线比相应的黑色虚线晚 $0.75$ ms，与释放率的极高点大致重合。所以突触传递的延迟 $t_\text{delay}$ 约为 $0.75$ ms。
 }
