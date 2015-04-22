@@ -19,7 +19,7 @@ C \frac{\dd{v}}{\dd{t}} &= k \left( v-v_\text{r} \right) \left( v-v_\text{t} \ri
 其中 $v$ 是细胞膜电位， $u$ 是恢复电流， $C$ 是细胞膜电容， $v_\text{r}$ 是细胞膜静息电位， $v_\text{t}$ 是细胞膜自主发放电位。
 $a$， $b$， $c$， $d$，和 $k$是其他参数， $I$ 是外部输入的电流。
 
-在模拟 Fast-Spiking 神经元时，对模型中的式\ref{equation:izhikevich-recovery-current}进行一些改动，
+在模拟快速发放神经元时，对模型中的式\ref{equation:izhikevich-recovery-current}进行一些改动，
 \begin{align}
 \frac{\dd{u}}{\dd{t}} &= 0.2 \left\{ U\left( v \right) - u \right\} \label{equation:izhikevich-fast-spiking} \\
 U\left( v \right) &= \begin{cases} 0, &\mbox{当} v < v_\text{b} \mbox{时} \\ 0.025, &\mbox{当} v \geq v_\text{b} \mbox{时} \end{cases}
@@ -106,7 +106,7 @@ q(t) = q_\text{ar}(t) +q_\text{sr}(t) - q_\text{s\&a}(t). \label{equation:total-
 
 式\ref{equation:sr-facilitation}，\ref{equation:ar-facilitation}，\ref{equation:stp-depression}，和\ref{equation:total-release}描述了扩展后模型的突触动力学。图\ref{figure:model-diagram}为模型的示意图。
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[scale=0.5]{model-diagram.eps}
 \caption{同步释放与非同步释放突触模型示意图。描述突触在从静息状态，到遇到动作电位，再回到静息状态的时间过程中各个阶段的变化。
@@ -121,7 +121,7 @@ q(t) = q_\text{ar}(t) +q_\text{sr}(t) - q_\text{s\&a}(t). \label{equation:total-
 
 \section{网络模型}
 \label{section:model:network-model}
-网络模型使用 Izhikevich 神经元模型，与带有非同步释放特性的突触模型结合组成抑制性 Fast-Spiking 神经元网络。
+网络模型使用 Izhikevich 神经元模型，与带有非同步释放特性的突触模型结合组成抑制性快速发放神经元网络。
 总共取 $n$ 个神经元，神经元之间随即链接，连接概率为 $p$。
 
 在传统突触模型中，突触的状态可以由突触前神经元的发放完全决定，与突触后神经元无关。
