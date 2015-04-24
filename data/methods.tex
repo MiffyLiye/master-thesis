@@ -113,12 +113,12 @@ I_\text{leaky}, & \text{若 } t \leq t_0
 \begin{equation}
 \begin{split}
 q(i - \Delta) &= \Argmin_{p \geq 0} \left| \sum_{j=1}^{i-1} K(i-j)q(j-\Delta)\dd{t} + Ap\dd{t} - I_\text{syn}(i) \right| \\
-\text{且满足 } & \forall k \geq i, I_\text{syn}(k) \geq e^{-(k-i)\dd{t}/\tau_\text{GABA}} \cdot J(i)
+\text{且满足 } & \forall k \geq i, \left| I_\text{syn}(k) \right| \geq \left| e^{-(k-i)\dd{t}/\tau_\text{GABA}} \cdot J(i) \right|
 \end{split}
 \end{equation}
 其中 $J(i) = \sum_{j=1}^{i-1} K(i-j)q(j-\Delta)\dd{t} + Ap\dd{t}$。
-这样得到的估计值 $Aq_e(t - t_\text{delay})$ 满足 $A \cdot K * q_e \leq I_\text{syn}$。
-约束条件 $\forall k \geq i, I_\text{syn}(k) \geq e^{-(k-i)\dd{t}/\tau_\text{GABA}} \cdot J(i)$ 保证了第 $i$ 步之后存在　$Aq \geq 0$ 的值满足$A \cdot K * q_e \leq I_\text{syn}$。
+这样得到的估计值 $Aq_e(t - t_\text{delay})$ 满足 $\left| A \cdot K * q_e \right| \leq \left| I_\text{syn} \right|$。
+约束条件 $\forall k \geq i, \left| I_\text{syn}(k) \right| \geq \left| e^{-(k-i)\dd{t}/\tau_\text{GABA}} \cdot J(i) \right|$ 保证了第 $i$ 步之后存在　$Aq \geq 0$ 的值满足$A \cdot K * q_e \leq I_\text{syn}$。
 
 结果显示得到的 $Aq_e$ 进行卷积后与 $I_\text{syn}$ 非常接近（见图\ref{figure:deconvolution-and-latency}A-B）。
 \begin{figure}
@@ -171,8 +171,8 @@ $U_\text{sr}$， $\tau_\text{ar}$， $U_\text{ar}$， $\tau_d$， $X_F$， $x_0 
 \begin{equation}
  \log P\left(\bm{M_\text{r}}\left|\bm{\theta}\right.\right) = \sum_{r \in
     \{\text{sr}, \text{ar}\}}
-  \sum_{k=1}^{N_{sp}} \left(-\frac{\big(\tilde{M}_{r}^{(k)}-\mu_{r}^{(k)}\big)^2}{2\big(\sigma_r^{(k)}\big)^2}
-- \log\sqrt{2\pi}\sigma^{(k)} \right),
+  \sum_{k=1}^{N_{sp}} \left(-\frac{\big(\tilde{M}_{r}^{(k)}-\mu_{r}^{(k)}\big)^2}{2\big(\sigma_\text{r}^{(k)}\big)^2}
+- \log\sqrt{2\pi}\sigma_\text{r}^{(k)} \right),
 \label{equation:probabilistic-inference-log}
 \end{equation}
 其中 $\tilde{M}_\text{r}^{(k)}$ 计算模型在相应释放区间内的平均释放量。
@@ -222,5 +222,49 @@ q_\text{ar}(t) = x(t) u_\text{ar}(t)\dd{t}
 \label{figure:fs-pc-fitting}
 \end{figure}
 
+此处也可以受遗传算法启发，采用局部启发式搜索策略。
+每一轮搜索时，把上一轮搜索得到的最优点作为中心，在邻近区域进行搜索最优点，作为下一轮搜索的中心。
+在持续搜索的过程中，一开始可以设置较大的范围和较稀疏的采样间距，之后逐步缩小邻近区域的大小和采样的间距，直到最终收敛。
+搜索半径，半径收缩速度等参数可以根据所能利用的计算资源来灵活确定。
+
 \subsubsection{计算囊泡释放量子}
 在参数 $\tau_\text{sr}$，$U_\text{sr}$， $\tau_\text{ar}$， $U_\text{ar}$， $\tau_d$ 找到之后,我们就可以接着计算 $x_0$ 的大小。
+
+根据突触接收器的模型（式\ref{equation:synaptic-current-general}和式\ref{equation:receptor-conductance-general}），一个量子的递质释放导致的IPSC的高度为 $\tilde{x_0} = A \cdot x_0$，那么 $x_0 = \frac{\tilde{x_0}}{A}$ 就是量子大小。
+$A$ 是归一化参数， $\tilde{x_0}$ 则根据持续动作电位之后的释放率的统计来估计。
+
+与计算释放率的时候类似，这里我们只能通过实验数据得到 $\tilde{x_0} = w(v - E_\text{GABA}) x_0 = Ax_0$，即单个量子化释放所引起的IPSC的高度。
+
+首先将动作电位结束后的时间分为长度为 $\Delta t = 3.9$ ms 的小区间。
+在第 $j$ 个区间内的递质释放量为 $M(j) = \tilde{q}(j)\Delta t$，它可以通过去卷积的方法得到。
+
+非同步释放所对应的囊泡与细胞膜融合事件模拟为一个二项过程，也可以用泊松过程来近似。
+前人的研究发现发放后的 IPSC 的平均值和方差是线性相关的\cite{Hefft2005}，这意味着递质的释放具有泊松过程的特点 \cite{DELCASTILLO1954}。
+虽然囊泡的释放数目是一个平均值随时间变化的泊松过程，但是在一段很短的时间内，可以认为平均值是一个常数。
+因此，在每一个小区间内，囊泡释放数目的方差和平均值的比值应该是 $1$。我们根据这个性质来推断 $\tilde{x_0}$ 的值。
+
+记 $p(j)$ 为第 $j$ 个时间区间内释放的囊泡数目对应的泊松随机数。
+对应的递质释放统计量为 $M(j) = \tilde{x_0}p(j)$。
+随机变量 $M(j)$ 的方差和平均值的比值为
+\begin{equation}
+\begin{split}
+\frac{D\left( M(j) \right)}{E\left( M(j) \right)} &= \tilde{x_0}\frac{D\left( p(j) \right)}{E\left( p(j) \right)} \\
+&= \tilde{x_0}
+\end{split}
+\label{equation:quantum-size}
+\end{equation}
+因为对于泊松随机变量 $p(j)$，有 $\frac{D\left( p(j) \right)}{E\left( p(j) \right)} = 1$，所以可以通过线性回归的方法，得到 $j = 1,2,\cdots,N$ 时，$M(j)$ 的方差与平均值的比值，即 $\tilde{x_0}$。
+统计分析采用 $200$ Hz 发放后的数据，因为此种条件下非同步释放更强，结果受系统误差的影响可能会相对较小。
+
+统计结果显示 $\tilde{x_0} \approx 10$ pA （见图\ref{figure:fs-pc-quantum-size}）。
+寻找最小的自发递质释放所引起的 IPSC 的高度，发现大约是在 $10 - 20$ pA 左右。
+推断出的$\tilde{x_0}$在此范围内也验证了方法的有效性。
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{fs-pc-quantum-size.eps}
+\caption{}
+\label{figure:fs-pc-quantum-size}
+\end{figure}
+
+至此突触释放模型中所有的参数就全部确定了（见表\ref{table:parameters}）。
