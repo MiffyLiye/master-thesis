@@ -16,7 +16,7 @@
 \subsection{数据预处理}
 \label{section:methods:data-preprocessing}
 
-\subsubsection{估计突触电流}
+\paragraph{估计突触电流}
 实验记录到的细胞膜电流包括细胞膜的漏电流 $I_\text{leaky}(t)$ 和由于突触信号传递导致的突触电流 $I_\text{syn}(t)$ 。
 
 细胞产生漏电流的离子通道一般是受细胞膜电位调控的，实验条件下细胞膜电位被固定，可以假设漏电流恒定不变。
@@ -27,7 +27,7 @@
 为了不引入太大的偏差， $\epsilon$ 需要足够小。
 试验中取了 $\epsilon = 0.2$ pA，相对于IPSC的大小，这是一个非常小的值。
 
-\subsubsection{去卷积方法}
+\paragraph{去卷积方法}
 根据突触后模型式\ref{equation:synaptic-current-general}和式\ref{equation:receptor-conductance-general}，假设突触后神经元细胞膜电位为常数，则 $I_\text{syn}$ 可以表示成卷积的形式
 \begin{equation}
 I_\text{syn}(t) = \int_{-\infty}^t e^{-\frac{t - t'}{\tau_\text{GABA}}} A q(t' - t_\text{delay}) \dd{t'}
@@ -227,7 +227,7 @@ q_\text{ar}(t) = x(t) u_\text{ar}(t)\dd{t}
 在持续搜索的过程中，一开始可以设置较大的范围和较稀疏的采样间距，之后逐步缩小邻近区域的大小和采样的间距，直到最终收敛。
 搜索半径，半径收缩速度等参数可以根据所能利用的计算资源来灵活确定。
 
-\subsubsection{计算囊泡释放量子}
+\paragraph{计算囊泡释放量子}
 在参数 $\tau_\text{sr}$，$U_\text{sr}$， $\tau_\text{ar}$， $U_\text{ar}$， $\tau_d$ 找到之后,我们就可以接着计算 $x_0$ 的大小。
 
 根据突触接收器的模型（式\ref{equation:synaptic-current-general}和式\ref{equation:receptor-conductance-general}），一个量子的递质释放导致的IPSC的高度为 $\tilde{x_0} = A \cdot x_0$，那么 $x_0 = \frac{\tilde{x_0}}{A}$ 就是量子大小。
