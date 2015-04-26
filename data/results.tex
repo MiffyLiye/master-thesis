@@ -4,7 +4,7 @@
 
 \section{模型参数}
 \label{section:results:parameters}
-默认情况下选用表\ref{table:parameters}中的最优参数进行仿真计算。
+从图\ref{figure:fs-pc-fitting}看出，模型能够与实验数据很好地拟合，默认情况下选用表\ref{table:parameters}中的最优参数进行仿真计算。
 
 \section{通过调整模型参数模拟非同步释放的变化}
 \label{section:result:modulate-asynchronous-release}
@@ -30,7 +30,7 @@ PV 是一种蛋白质，能够使自由钙离子浓度快速下降，导致钙�
 因此 $\tau_\text{ar}$ 在包含 PV 的快速发放神经元中相对较小。
 同时，前人的研究也发现钙离子的快速清除能够导致非同步释放减弱 \cite{Jiang2015}。
 
-在试验中，经常使用 EGTA-AM 溶液浸泡来调节细胞内自由钙离子的清除速率。
+在实验中，经常使用 EGTA-AM 溶液浸泡来调节细胞内自由钙离子的清除速率。
 增加 EGTA-AM 可以提高钙离子的清除 \cite{Otsu2004,Jiang2015}。
 这种调控对应于模型中 $\tau_\text{sr}$ 与 $\tau_\text{ar}$ 的改变。
 由于两类钙离子感受器具有不同的生物化学性质，所以同一操作对 $\tau_\text{sr}$ 和 $\tau_\text{ar}$ 能造成不同的影响。
@@ -67,7 +67,7 @@ $\tau_\text{ar}$ 使用自定义的值，黑线对应 $\tau_\text{ar} = 8$ ms，
 流入的钙离子增多对应于模型中 $U_\text{sr}$ 和 $U_\text{ar}$ 的改变。
 
 我们调节 $U_\text{ar}$ 来展示这一参数对同步释放和非同步释放的影响。
-将 $U_\text{ar}$ 从 $0.02$ ms $0.06$ 能够使 $u_\text{ar}$ 在每个动作电位后增长更高，由于 $\tau_\text{ar}$ 较小， $u_\text{ar}$ 在很少几个动作电位后会很快饱和。
+将 $U_\text{ar}$ 从 $0.02$ 增加到 $0.06$ 能够使 $u_\text{ar}$ 在每个动作电位后增长更高，由于 $\tau_\text{ar}$ 较小， $u_\text{ar}$ 在很少几个动作电位后会很快饱和。
 更高的 $u_\text{ar}$ 导致更大的 $I_\text{ar}$ （见图\ref{figure:modulation-of-u-ar}）。
 与之前的仿真结果类似，非同步释放增强导致可释放的递质资源 $x$ 变小，间接导致 $I_\text{sr}$ 减小。
  
@@ -132,7 +132,7 @@ $U_\text{ar}$ 使用自定义的值，蓝线对应 $U_\text{ar} = 0$，即没有
 神经元网络仿真计算采用 $n = 200$ 个神经元（模型见第\ref{chapter:model}章），突触包含非同步递质释放，突触后递质接收器模型为
 \begin{align}
 \label{equation:network-receptor-model}
-\frac{\dd{g_i\left(t\right)}}{\dd{t}} &= - \frac{g_i\left(t\right)}{\tau_\text{GABA}} + w_i \cdot q_i\left(t - t_\text{delay}\right) \cdot \delta(0) \\
+\frac{\dd{g_i\left(t\right)}}{\dd{t}} &= - \frac{g_i\left(t\right)}{\tau_\text{GABA}} + w_i \cdot q_i\left(t - t_\text{delay}\right) \\
 I_\text{syn} &= \sum_i g_i\left(v-E_\text{GABA}\right) \\
 I &= - I_\text{syn} + I_\text{ext}
 \end{align}
@@ -196,7 +196,7 @@ X_F &= 1
 \end{figure}
 
 \paragraph{使用两个神经元的回路和相位反应曲线进行结果分析}
-这里主要分析衰减常数的影响，于是把非同步释放替换为同步释放和衰减较慢的递质感受器。
+这里主要分析衰减常数的影响，于是把非同步释放替换为同步释放和衰减较慢的递质接收器。
 
 在两个神经元的回路中，神经元 $\alpha$ 和神经元 $\beta$ 相互连接，没有自连接。背景噪声为高斯，具有相同的平均值和方差。
 当两个神经元同步时，在第 $n$ 个周期
@@ -256,9 +256,9 @@ X_F &= 1
 网络采用 $n = 200$ 个神经元，$\tau_\text{GABA} = 5$ ms， $w_0 = 35$ nS， $x_0 / X_F = 0.01$。
 
 仿真计算结果显示更强的非同步释放能导致发放间隔的标准差变大。但影响大小取决于网络连接概率。
-虽然突出有随机性，但当网络连接较密时，多个突触对同一个神经元的输入的随机性会相互抵消，所以总体随机性变小，而连接较稀疏时，随机性难以抵消，总体随机性较大（图\ref{figure:spike-timing-precision}）。
+虽然突触有随机性，但当网络连接较密时，多个突触对同一个神经元的输入的随机性会相互抵消，所以总体随机性变小，而连接较稀疏时，随机性难以抵消，总体随机性较大（图\ref{figure:spike-timing-precision}）。
 
-非同步释放的增强有去同步的效果，但这一效果大小取决于网络连接的疏密程度。对于稠密的网络连接，这一效果可以忽略（图\ref{figure:spike-timing-precision}）。
+非同步释放的增强可能有去同步的效果，但来自释放随机性的影响大小取决于网络连接的疏密程度。对于稠密的网络连接，释放随机性的影响较小（图\ref{figure:spike-timing-precision}）。
 
 \begin{figure}[H]
     \begin{subfigure}{0.5\textwidth}
@@ -282,7 +282,7 @@ X_F &= 1
 (b) 相对值 $\sigma(T)/\mu(T)$ 也随非同步释放的增大而增大。连接概率为 $p = 1$。
 (c) 发放间隔的标准差 $\sigma(T)$ 随非同步释放的增大（增大 $U_\text{ar}$ ）而增大。链接概率为 $p = 0.3$。
 (d) 相对值 $\sigma(T)/\mu(T)$ 也随非同步释放的增大而增大。连接概率为 $p = 0.3$。
-统计使用刺激开始后第 $2$ s 到第 $4$ s 的发放间隔。背景电流为常数 $I_{\mu} = 100$ pA， $\dd{t} = 0.005$ ms。初始状态为随机生成，不同试验中都相同。}
+统计使用刺激开始后第 $2$ s 到第 $4$ s 的发放间隔。背景电流为常数 $I_{\mu} = 100$ pA， $\dd{t} = 0.005$ ms。初始状态为随机生成，不同实验中都相同。}
 \label{figure:spike-timing-precision}
 \end{figure}
 
@@ -328,7 +328,7 @@ g_{mean} &= \frac{1}{T} \int_{0}^{T} {g_{GABA}\left(t\right)\dd{t}} \\
 所以，为了使平均电导相同，我们将把 $w_{GABA}$ 根据 $\tau_\text{GABA}$ 进行归一化。
 
 $Q_{GABA}$ 可以看作是加权求和的结果， $g\left(t\right)$ 则是每一时刻的权重。 $v\left(t\right) - E_{GABA}$ 随时间 $t$ 单调递增，所以更大的 $\tau{GABA}$ 使得权重分布偏向更大的 $v\left(t\right) - E_{GABA}$，这就导致 $Q_{GABA}$ 变大。
-由于 $v\left(t\right) - E_{GABA}$ 在一个周期内变化巨大，随意权重的偏移能使 $Q_{GABA}$ 明显变化（见图\ref{figure:fs-neuron-tau-charge}）。 
+由于 $v\left(t\right) - E_{GABA}$ 在一个周期内变化巨大，所以权重的偏移能使 $Q_{GABA}$ 明显变化（见图\ref{figure:fs-neuron-tau-charge}）。 
 
 \begin{figure}
 \includegraphics{fs-charge-tau-relation.eps}
@@ -352,6 +352,6 @@ $Q_{GABA}$ 可以看作是加权求和的结果， $g\left(t\right)$ 则是每�
     \end{subfigure}
 \caption{不同 $\tau_\text{GABA}$ 下的输入输出关系。
 (a) 当 $\tau_{GABA} = 2.6$ ms 较小时，增大权重对抑制性的影响较小。
-(b) 当 $\tau_{GABA} = 2.6$ ms 较大时，增大权重对抑制性的影响较大。}
+(b) 当 $\tau_{GABA} = 15$ ms 较大时，增大权重对抑制性的影响较大。}
 \label{figure:fs-neuron-inhibition}
 \end{figure}

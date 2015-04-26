@@ -61,13 +61,50 @@
 
 % 定义中英文摘要和关键字
 \begin{cabstract}
-中文摘要  
+神经元通过突触传递信息。
+动作电位引起轴突末梢的神经递质释放。
+通常，神经递质的释放与动作电位的到达在时间上紧密锁定，因此被称为同步释放。
+然而，神经递质的释放可以高度随机，而且在动作电位停止发放后很久还有递质释放，这是非同步释放。
+非同步释放会随着组织和神经元类型的变化而变化。
+最近实验发现快速发放神经元中也有。
+要注意，在人类癫痫病人的组织中发现非同步释放增强，意味着它可能对产生病态神经活动有重要作用。
+现有的用于通过神经元网络仿真计算来研究神经活动的模型几乎都只考虑同步释放而忽略了非同步释放。
+这里，我们提出一种包含非同步释放的唯相模型，它一方面具有非同步释放的几个基本的特点，另一方面比较简单因而适用于大规模网络仿真。
+我们提出的模型基于著名的短时程突触可塑性模型，增加了随机释放的部分来模拟非同步释放。
+我们使用人类癫痫组织中的抑制性快速发放神经元的实验数据来拟合模型参数，进而展示出我们的模型能够重现真实非同步递质释放的特性。
+我们也在同步化发放的神经元网络上进行了一些与前人实验相关的仿真计算，分析了非同步释放的影响以及作用机制。
 \end{cabstract}
 
-\ckeywords{中文， 关键词}
+\ckeywords{突触模型，非同步释放，短时程突触可塑性，随机释放}
 
 \begin{eabstract} 
-   English abstract
+Neurons communicate with each other via synapses.  Action
+potentials cause release of neurotransmitters at the axon
+terminal. Typically, this neurotransmitter release is tightly time-locked to
+the arrival of an action potential and is thus called synchronous
+release. However, neurotransmitter release is stochastic and the
+rate of release of small quanta of neurotransmitters can be
+considerably elevated even long after the ceasing of spiking
+activity, leading to asynchronous release of neurotransmitters. 
+Such asynchronous release varies for tissue and neuron
+types and has been shown recently to be pronounced in fast-spiking
+neurons.  Notably, it was found that asynchronous release is
+enhanced in human epileptic tissue implicating a possibly important
+role in generating abnormal neural activity. Current neural
+network models for simulating and studying neural activity virtually only
+consider synchronous release and ignore asynchronous transmitter
+release.  Here, we develop a phenomenological model for asynchronous
+neurotransmitter release, which, on one hand, captures the
+fundamental features of the asynchronous release process, and, on
+the other hand, is simple enough to be incorporated in large-size
+network simulations.  Our proposed model is based on the well-known
+equations for short-term dynamical synaptic interactions and
+includes an additional stochastic term for modelling asynchronous
+release. We use experimental data obtained from inhibitory
+fast-spiking synapses of human epileptic tissue to fit the model
+parameters, and demonstrate that our model reproduces the
+characteristics of realistic asynchronous transmitter release. 
+We also did some network simulations in the synchronized fast-spiking neural network relevant to previous experiments, and analyzed the mechanisms.
 \end{eabstract}
 
-\ekeywords{English, keywords}
+\ekeywords{synapse model,asynchronous release,short-term synaptic plasticity,stochastic release}

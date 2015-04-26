@@ -25,7 +25,7 @@
 对于抑制性神经元的突触，它所产生的突触电流应该为非正值，但由于噪声的存在，可能有部分时间点 $t$ 时 $I_\text{syn}(t) > 0$。
 这时需要对数据进行修正，先取一个极小的电流 $\epsilon > 0$ 作为阈值，对于 $I_\text{syn}(t) > -\epsilon$ 的时间点，将 $I_\text{syn}(t)$ 修改为 $-\epsilon$。
 为了不引入太大的偏差， $\epsilon$ 需要足够小。
-试验中取了 $\epsilon = 0.2$ pA，相对于IPSC的大小，这是一个非常小的值。
+实验中取了 $\epsilon = 0.2$ pA，相对于IPSC的大小，这是一个非常小的值。
 
 \paragraph{去卷积方法}
 根据突触后模型式\ref{equation:synaptic-current-general}和式\ref{equation:receptor-conductance-general}，假设突触后神经元细胞膜电位为常数，则 $I_\text{syn}$ 可以表示成卷积的形式
@@ -43,7 +43,7 @@ I_\text{syn}(t) = \int_{-\infty}^t e^{-\frac{t - t'}{\tau_\text{GABA}}} A q(t' -
 I_\text{syn} = A \cdot K * q
 \label{equation:synaptic-current-convolution-theory}
 \end{equation}
-其中 $K(t) = \cdot e^{-\frac{t}{\tau_\text{GABA}}}$， $*$ 表示卷积。
+其中 $K(t) = e^{-\frac{t}{\tau_\text{GABA}}}$， $*$ 表示卷积。
 对式\ref{equation:synaptic-current-convolution-theory}进行傅里叶变换得到
 \begin{equation}
 F(I_\text{syn}) = A \cdot F(K) \cdot F(q)
@@ -60,7 +60,7 @@ A \cdot F(q) = \frac{F(I_\text{syn})}{F(K)}
 A \cdot q = F^{-1}\left( F(I_\text{syn}) / F(K) \right)
 \end{equation}
 
-但实际试验中，由于IPSC的波形中高频傅里叶分量不可忽略，进行离散傅里叶变换会造成较大的误差。
+但实际实验中，由于IPSC的波形中高频傅里叶分量不可忽略，进行离散傅里叶变换会造成较大的误差。
 即
 \begin{equation}
 \left| I_\text{syn} - A \cdot K * q_e \right| \gg 0
@@ -72,7 +72,7 @@ A \cdot q = F^{-1}\left( F(I_\text{syn}) / F(K) \right)
 因此在分析数据时使用了自己提出的曲卷积方法，此方法利用了式\ref{equation:synaptic-current-convolution-theory}中 $K$ 的特点，理论上只对指数衰减型的 $K$ 适用。
 虽然降低了通用性，但能够避免前两种方法的缺点。
 
-从试验记录中预处理得到的 $I_\text{syn}$ 的时间分辨率为 $\dd{t} = 0.05$ ms。
+从实验记录中预处理得到的 $I_\text{syn}$ 的时间分辨率为 $\dd{t} = 0.05$ ms。
 可将时间段 $[0, T]$ 分为 $N = T/\dd{t}$ 个宽度为 $\dd{t}$ 的小区间。
 在离散形式下，第 $i$ 个时间区间内的突触电流为
 \begin{equation}
@@ -141,13 +141,13 @@ q(i - \Delta) &= \Argmin_{p \geq 0} \left| \sum_{j=1}^{i-1} K(i-j)q(j-\Delta)\dd
 其中动作电位的发放次数分别为 $10$， $15$， $20$， 和 $25$，各有 $3$ 次重复实验。
 为了便于比较，我们只选取前 $N_{sp} = 10$ 个动作电位的数据进行统计。
 
-由于实验记录中噪声的存在，且非同步释放本身高度随机，所以这里通过将递质释放率分成多个时间区间分段统计平均释放率，并于模型进行比较，来确定模型的参数。
+由于实验记录中噪声的存在，且非同步释放本身高度随机，所以这里通过将递质释放率分成多个时间区间分段统计平均释放率，并与模型进行比较，来确定模型的参数。
 
 通过比较突触前神经元的细胞膜电流和估计出的释放率，我们观察到释放率的极高点相对于突触前神经元的发放大约总是落后 $t_\text{delay} = 0.75$ ms（见图\ref{figure:deconvolution-and-latency}C-D）。这个值就选取为式\ref{equation:receptor-conductance-general}中的突出传递延迟。
 
-更多统计后发现，递质释放率在突触前神经元发放 $0.3$ ms 后开始急剧上升，持续约 $1.1$ ms 后急剧下降。
+更多统计后发现，递质释放率在突触前神经元发放 $0.3$ ms 后开始急剧上升，持续约 $1.1$ ms 后急剧下降到几乎为 $0$。
 因此我们把时间分为两种区间。
-第一种开始于突触前神经元每个动作电位后的 $0.3$ ms，持续 $1.1$ ms，这些区间记为同步释放区间 $P_\text{sr}^{(k,i)}$ ，表示第 $i$ 次试验中第 $k$ 个动作电位之后的同步释放区间。
+第一种开始于突触前神经元每个动作电位后的 $0.3$ ms，持续 $1.1$ ms，这些区间记为同步释放区间 $P_\text{sr}^{(k,i)}$ ，表示第 $i$ 次实验中第 $k$ 个动作电位之后的同步释放区间。
 第二种则是两个同步释放区间之间的时间段，记为非同步释放区间 $P_\text{ar}^{(k,i)}$。
 神经递质在相应区间内的释放总量为
 \begin{equation}

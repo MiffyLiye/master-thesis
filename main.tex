@@ -23,13 +23,14 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{bm}
+\usepackage{metalogo}
 
 \newcommand{\dd}[1]{\,\mathrm{d}{#1}}
 \DeclareMathOperator{\argmax}{arg\,max}
 \DeclareMathOperator*{\Argmax}{arg\,max}
 \DeclareMathOperator{\argmin}{arg\,min}
 \DeclareMathOperator*{\Argmin}{arg\,min}
-
 
 \begin{document}
 
@@ -55,11 +56,11 @@
 
 %%% 正文部分
 \mainmatter
-\include{data/chap01}
-\include{data/chap02}
+%\include{data/chap01}
+%\include{data/chap02}
 
 \include{data/background}
-\include{data/review}
+%\include{data/review}
 \include{data/model}
 \include{data/methods}
 \include{data/results}
@@ -73,9 +74,9 @@
 \makeatletter
 \ifthu@bachelor
   % 插图索引
-  \listoffigures
+  %\listoffigures
   % 表格索引
-  \listoftables
+  %\listoftables
   % 公式索引
   %\listofequations
 \fi
@@ -92,9 +93,9 @@
 
 % 附录
 \begin{appendix}
-\input{data/appendix01}
+%\input{data/appendix01}
 \end{appendix}
 
 % 个人简历
-\include{data/resume}
+%\include{data/resume}
 \end{document}

@@ -68,7 +68,7 @@ I_\text{syn}(t) &= g(t)\left(v(t) - E_\text{syn}\right), \label{equation:synapti
 \frac{\dd{u_\text{sr}\left(t\right)}}{\dd{t}} &= -\frac{u_\text{sr}\left(t\right)}{\tau_\text{sr}}+U_\text{sr}\left[1-u_\text{sr}\left(t\right)\right]\sum_m \delta\left(t-t_m\right), \label{equation:sr-facilitation} \\
 \frac{\dd{u_\text{ar}\left(t\right)}}{\dd{t}} &= -\frac{u_\text{ar}\left(t\right)}{\tau_\text{ar}}+U_\text{ar}\left[1-u_\text{ar}\left(t\right)\right]\sum_m \delta\left(t-t_m\right), \label{equation:ar-facilitation}
 \end{align}
-其中 $u_\text{sr}$ 和 $u_\text{ar}$ 是由于钙离子参与造成的造成的同步释放与非同步释放的不同的激活程度。
+其中 $u_\text{sr}$ 和 $u_\text{ar}$ 是由于钙离子结合造成的同步释放与非同步释放的不同的激活程度。
 $U_\text{sr}$ 和 $U_\text{ar}$ 控制每个动作电位之后同步释放与非同步释放激活程度的提升大小。
 $\tau_\text{sr}$ 和 $\tau_\text{ar}$ 控制钙离子感受器与钙离子分离造成同步释放与非同步释放激活程度下降的速度。
 
@@ -84,7 +84,7 @@ q_\text{sr}(t) = u_\text{sr}(t_+)x(t_-)\sum_m \delta(t-t_m). \label{equation:sr-
 随机变量 $n$ 服从二项分布， $n\sim{\cal{B}}\left(N,p\right)$， 则它的概率分布函数为 $P(n=k|N,p) = \binom{N}{k} p^k (1-p)^{N-k}$, 其中 $k\in\{0,\ldots,N\}$， 且 $p$ 是单个事件发生的概率。
 
 假设每个囊泡所含递质量相同，记为释放量子 $x_0$ ，那么在时刻 $t$ 剩余的可以释放的囊泡数量则有 $\sim \left\lfloor x(t)/x_0 \right\rfloor$ ，其中 $\lfloor \cdot \rfloor$ 表示取向下取整函数，取不大于自变量的最大整数。
-在一个小的时间段 $[t,t+\dd{t})$ 内，单个囊泡由于非同步释放的钙离子感受器激活导致释放的释放概率为 $u_\text{ar}(t)\dd{t}$ 。
+在一个小的时间段 $[t,t+\dd{t})$ 内，单个囊泡由于非同步释放的钙离子感受器激活导致释放的释放概率为 $u_\text{ar}(t)\dd{t}$ ，$\dd{t}$ 取毫秒单位下的数值。
 那么，非同步释放事件发生的数量 $n(t)$ 服从二项分布 ${\cal{B}}\left(\left\lfloor x(t)/x_0\right\rfloor,u_\text{ar}(t)\dd{t}\right)$。
 因此，在时间段 $[t,t+\dd{t})$ 内释放的递质量为
 \begin{equation}
@@ -109,7 +109,7 @@ q(t) = q_\text{ar}(t) +q_\text{sr}(t) - q_\text{s\&a}(t). \label{equation:total-
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{model-diagram.eps}
-\caption{同步释放与非同步释放突触模型示意图。描述突触在从静息状态，到遇到动作电位，再回到静息状态的时间过程中各个阶段的变化。
+\caption{同步释放与非同步释放突触模型示意图。描述突触从静息状态，到遇到动作电位，再回到静息状态的时间过程中各个阶段的变化。
 第一行：突触处于静息状态，囊泡停泊在细胞膜上的活动区，准备释放，与囊泡上的钙离子感受器结合的钙离子较少，囊泡激活程度极低（用白色表示）。
 第二行：一个动作电位过后，钙离子大量进入细胞内，与囊泡上的钙离子感受器结合，此时囊泡有较高的释放概率（用橙色表示）。
 第三行：紧接着动作电位结束，一些囊泡被钙离子感受器激活（标记为绿色，蓝色，和紫色），开始与细胞膜融合并释放递质。这些囊泡有的是被同步释放的钙离子感受器激活（用绿色表示），有的是被非同步释放的钙离子感受器激活（用蓝色表示），还有的是两种钙离子感受器同时激活（用紫色表示）。
@@ -122,7 +122,7 @@ q(t) = q_\text{ar}(t) +q_\text{sr}(t) - q_\text{s\&a}(t). \label{equation:total-
 \section{网络模型}
 \label{section:model:network-model}
 网络模型使用 Izhikevich 神经元模型，与带有非同步释放特性的突触模型结合组成抑制性快速发放神经元网络。
-总共取 $n$ 个神经元，神经元之间随即链接，连接概率为 $p$。
+总共取 $n$ 个神经元，神经元之间随机链接，连接概率为 $p$。
 
 在传统突触模型中，突触的状态可以由突触前神经元的发放完全决定，与突触后神经元无关。
 这样由同一个神经元发出的多条突触的状态应该是完全相同的，仿真计算时只需模拟其中一条突触就可以了，计算量只会随着神经元数目 $n$ 的增多而线性增长 $O(n)$。
@@ -151,5 +151,3 @@ q_\text{ar}(t) = x(t) u_\text{ar}(t)\dd{t}
 \subsection{随机相关释放}
 均匀释放模型减小了递质释放的随机性。另一种简化策略是保留量子化随机释放，但同一个神经元发出的突触状态保持一致，即拥有完全相同的随机性。
 这样可能会放大单个突触的释放随机性对整个网络的影响。
-
-着两种简化模型的影响见\ref{chapter:results}中的相关仿真计算结果。
