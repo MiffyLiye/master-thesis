@@ -3,8 +3,8 @@
 %%% TeX-master: t
 %%% End:
 
-\documentclass[bachelor,nofonts]{thuthesis}
-%\documentclass[master]{thuthesis}
+%\documentclass[bachelor,nofonts]{thuthesis}
+\documentclass[master,winfonts]{thuthesis}
 %\documentclass[doctor]{thuthesis}
 % \documentclass[%
 %   bachelor|master|doctor|postdoctor, % mandatory option
@@ -45,7 +45,7 @@
 \makeatletter
 \thu@setup@pdfinfo
 \makeatother
-\makecover
+\makecover % find details in thuthesis.cls \newcommand{\makecover}
 
 % 目录
 \tableofcontents
@@ -82,20 +82,20 @@
 \fi
 \makeatother
 
-
 % 参考文献
 \bibliographystyle{thubib}
 \bibliography{ref/refs}
 
+% 学术成果
+\include{data/resume}
 
 % 致谢
 \include{data/ack}
 
 % 附录
-\begin{appendix}
+%\begin{appendix}
 %\input{data/appendix01}
-\end{appendix}
+%\end{appendix}
 
-% 个人简历
-%\include{data/resume}
+
 \end{document}

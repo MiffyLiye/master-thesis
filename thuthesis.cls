@@ -174,22 +174,15 @@
 \setlength{\textheight}{\paperheight}
 \setlength\marginparwidth{0cm}
 \setlength\marginparsep{0cm}
-\ifthu@bachelor
-  \addtolength{\textwidth}{-6.4cm}
-  \setlength{\topmargin}{2.8cm-1in}
-  \setlength{\oddsidemargin}{3.2cm-1in}
-  \setlength{\footskip}{1.78cm}
-  \setlength{\headsep}{0.6cm}
-  \addtolength{\textheight}{-7.8cm}
-\else
-  \addtolength{\textwidth}{-6cm}
-  \setlength{\topmargin}{2.2cm-1in}
-  \setlength{\oddsidemargin}{3cm-1in}
-  \setlength{\footskip}{0.6cm}
+
+  \addtolength{\textwidth}{-4.5cm}
+  \setlength{\topmargin}{2.5cm-1in}
+  \setlength{\oddsidemargin}{2.5cm-1in}
+  \setlength{\footskip}{2.0cm}
   \setlength{\headsep}{0.2cm}
   \addtolength{\textheight}{-6cm}
-\fi
-\setlength{\evensidemargin}{\oddsidemargin}
+
+\setlength{\evensidemargin}{2.0cm-1in}
 \setlength{\headheight}{20pt}
 \setlength{\topskip}{0pt}
 \setlength{\skip\footins}{15pt}
@@ -430,7 +423,7 @@
     \leavevmode
     \@tempdima #3\relax
     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-    {\csname thu@toc@font\endcsname #4}\nobreak
+    {\heiti \csname thu@toc@font\endcsname #4}\nobreak
     \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
     \nobreak{\normalfont \normalcolor #5}%
     \par}%
@@ -475,6 +468,7 @@
 \thu@define@term{cfirstdiscipline}
 \thu@define@term{cseconddiscipline}
 \thu@define@term{cauthor}
+\thu@define@term{csid}
 \thu@define@term{csupervisor}
 \thu@define@term{cassosupervisor}
 \thu@define@term{ccosupervisor}
@@ -657,12 +651,12 @@
       \renewcommand{\baselinestretch}{1.3}
       \begin{center}
         \sanhao
-        \ifthu@master Thesis \else Dissertation \fi
+        \ifthu@master A Thesis \else Dissertation \fi
         Submitted to\\
-        {\bfseries Tsinghua University}\\
-        in partial fulfillment of the requirement\\
+        {\bfseries Beijing Normal University}\\
+        in Partial Fulfillment of the Requirements\\
         for the \ifthu@professional professional \fi
-        degree of\\
+        Degree of\\
         {\bfseries\sffamily\thu@edegree}
         \ifthu@professional\relax\else
           \\in\\[3bp]
@@ -697,7 +691,7 @@
   \end{center}}
 \newcommand{\thu@authorization@mk}{%
   \ifthu@bachelor\vspace*{0.5cm}\else\vspace*{0.72cm}\fi % shit code!
-  \begin{center}\erhao\heiti\thu@authtitle\end{center}
+  \begin{center}\xiaosi\songti\bf{\thu@authtitle}\end{center}
   \ifthu@bachelor\vskip5pt\else\vskip40pt\sihao[2.03]\fi\par
   \thu@authorization\par
   \textbf{\thu@authorizationaddon}\par
@@ -709,8 +703,8 @@
     \begingroup
       \parindent0pt\xiaosi
       \hspace*{1.5cm}\thu@authorsig\thu@underline[7em]\relax\hfill%
-                     \thu@teachersig\thu@underline[7em]\relax\hspace*{1cm}\\[3pt]
-      \hspace*{1.5cm}\thu@frontdate\thu@underline[7em]\relax\hfill%
+                     \thu@frontdate\thu@underline[7em]\relax\hspace*{1cm}\\[3pt]
+      \hspace*{1.5cm}\thu@teachersig\thu@underline[7em]\relax\hfill%
                      \thu@frontdate\thu@underline[7em]\relax\hspace*{1cm}
     \endgroup
   \fi}
@@ -724,8 +718,18 @@
       \ifthu@postdoctor\relax\else
         \cleardoublepage\thu@engcover
     \fi\fi
+    
     \ifthu@postdoctor\relax\else%
       \ifthu@bachelor\clearpage\else\cleardoublepage\fi%
+      \begin{center} \xiaosi\songti\bf{\thu@declarename} \end{center}
+      \par{\xiaosi\parindent2em\thu@declaretext}\vskip2cm
+        {\xiaosi\hfill\thu@signature\thu@underline[2.5cm]\relax%
+          \thu@backdate\thu@underline[2.5cm]\relax}%
+    \fi
+
+    \ifthu@postdoctor\relax\else%
+      \vskip4cm
+      %\ifthu@bachelor\clearpage\else\cleardoublepage\fi%
       \ifthu@bachelor\thu@authorization@mk\else%
       \begin{list}{}{%
         \topsep\z@%
@@ -778,14 +782,7 @@
 \newenvironment{ack}{%
     \thu@chapter*{\thu@ackname}
   }
-  {
-    \ifthu@postdoctor\relax\else%
-     \thu@chapter*{\thu@declarename}
-     \par{\xiaosi\parindent2em\thu@declaretext}\vskip2cm
-       {\xiaosi\hfill\thu@signature\thu@underline[2.5cm]\relax%
-        \thu@backdate\thu@underline[2.5cm]\relax}%
-    \fi
-  }
+
 \def\thu@starttoc#1{% #1: float type, prepend type name in \listof*** entry.
   \let\oldnumberline\numberline
   \def\numberline##1{\oldnumberline{\csname #1name\endcsname\hskip.4em ##1}}
