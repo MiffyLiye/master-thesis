@@ -692,6 +692,7 @@
 \newcommand{\thu@authorization@mk}{%
   \ifthu@bachelor\vspace*{0.5cm}\else\vspace*{0.72cm}\fi % shit code!
   \begin{center}\xiaosi\songti\bf{\thu@authtitle}\end{center}
+  %\par{\xiaosi\parindent2em\thu@authorization\par\vskip2cm
   \ifthu@bachelor\vskip5pt\else\vskip40pt\sihao[2.03]\fi\par
   \thu@authorization\par
   \textbf{\thu@authorizationaddon}\par
@@ -746,20 +747,31 @@
   \let\@tabular\thu@tabular}
 \newcommand{\thu@makeabstract}{%
   \ifthu@bachelor\clearpage\else\cleardoublepage\fi
-  \thu@chapter*[]{\cabstractname} % no tocline
+  %\thu@chapter*[\cabstractname]{}
+  \begin{center}
+    \sanhao[1.5] \songti \bf \thu@ctitle \par
+    \vskip16bp    
+    \xiaosan[1.5] \heiti \bf \cabstractname
+  \end{center}
   \ifthu@bachelor
     \pagestyle{thu@plain}
   \else
-    \pagestyle{thu@headings}
+    \pagestyle{thu@plain}
   \fi
   \pagenumbering{Roman}
-  \thu@cabstract
+  \xiaosi[1.6] \songti \par \thu@cabstract
   \vskip12bp
-  \setbox0=\hbox{{\heiti\thu@ckeywords@title}}
+  \setbox0=\hbox{{\sihao\heiti\thu@ckeywords@title}}
   \ifthu@bachelor\indent\else\noindent\hangindent\wd0\hangafter1\fi
     \box0\thu@ckeywords
-  \thu@chapter*[]{\eabstractname} % no tocline
-  \thu@eabstract
+  %\thu@chapter*[\eabstractname]{} % no tocline
+  \clearpage
+  \begin{center}
+    \sanhao[1.6] \songti \bf \thu@etitle \par
+    \vskip16bp    
+    \xiaosan[1.6] \heiti \bf \eabstractname
+  \end{center}
+  \xiaosi[1.6] \songti \par \thu@eabstract
   \vskip12bp
   \setbox0=\hbox{\textbf{\ifthu@bachelor Keywords:\else Key words:\fi\enskip}}
   \ifthu@bachelor\indent\else\noindent\hangindent\wd0\hangafter1\fi

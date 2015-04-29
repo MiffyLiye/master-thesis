@@ -246,6 +246,9 @@ X_F &= 1
 \end{figure}
 
 非同步递质释放作为一个缓慢衰减的过程，可以使网络更容易稳定在同相位状态。
+$\tau_\text{GABA}$ 越大，会导致同相位稳定态的吸引域越大。
+但是从相位反应曲线可以看出，越大的 $\tau_\text{GABA}$ 相位反应曲线越平缓，进而导致每个周期交互之后相位的修正值越小，即同步速度越慢。
+这样在噪声较大时， $\tau_\text{GABA}$ 过大可能会导致网络无法同步。
 
 \subsection{非同步释放对网络发放精确性的影响}
 \label{section:result:network-spike-timing}
